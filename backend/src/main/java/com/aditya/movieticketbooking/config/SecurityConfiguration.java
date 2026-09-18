@@ -38,7 +38,9 @@ public class SecurityConfiguration {
                                 "/api/v1/auditoriums",
                                 "/api/v1/auditoriums/*/seats",
                                 "/api/v1/movies",
-                                "/api/v1/shows")
+                                "/api/v1/shows",
+                                "/api/v1/discount-codes",
+                                "/api/v1/refund-policies")
                         .hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())

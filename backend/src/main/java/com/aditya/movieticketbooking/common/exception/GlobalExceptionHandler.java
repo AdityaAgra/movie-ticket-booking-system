@@ -58,6 +58,13 @@ public class GlobalExceptionHandler {
         return error(HttpStatus.CONFLICT, "CONFLICT", exception.getMessage(), request, Map.of());
     }
 
+    @ExceptionHandler(InvalidRequestException.class)
+    ResponseEntity<ApiError> handleInvalidRequest(
+            InvalidRequestException exception,
+            HttpServletRequest request) {
+        return error(HttpStatus.BAD_REQUEST, "BAD_REQUEST", exception.getMessage(), request, Map.of());
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     ResponseEntity<ApiError> handleAccessDenied(
             AccessDeniedException exception,
