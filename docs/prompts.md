@@ -27,3 +27,11 @@ Dependencies: What must be completed before starting this phase.
 Deliverable: The tangible outcome (e.g., "REST APIs for Admin inventory management are functional").
 
 Keep the plan strictly aligned with the provided LLD and HLD. Do not introduce new technologies or microservices not mentioned in the documents.
+
+## Coding
+
+Implement Phase 1 of the implementation plan
+
+Implement Phase 2 of the implementation plan
+
+Implement Phase 3 of the implementation plan and verify all test cases
