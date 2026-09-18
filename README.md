@@ -99,6 +99,17 @@ From the `backend` directory, with the database environment variables set:
 .\mvnw.cmd test
 ```
 
+## Local Development Users
+
+On first startup, the application creates these local users when `APP_BOOTSTRAP_ENABLED` is not set to `false`:
+
+| Role | Username | Password |
+|---|---|---|
+| Admin | `admin@moviebooking.local` | `admin123` |
+| Customer | `customer@moviebooking.local` | `customer123` |
+
+These credentials are for local development only. Override them with `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `CUSTOMER_EMAIL`, and `CUSTOMER_PASSWORD` before sharing or deploying the application.
+
 ## Project Documentation
 
 - [High-Level Design](docs/HLD.md)
