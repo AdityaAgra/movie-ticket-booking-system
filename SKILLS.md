@@ -19,6 +19,7 @@ This document records the development tools, frameworks, and AI-assisted skills 
 | JUnit 5 | Wrote unit tests for pricing, discounts, refunds, and business rules. |
 | Mockito | Mocked dependencies in unit tests where needed. |
 | Git and GitHub | Version control, commit history, and source-code submission. |
+| Postman | Imported the checked-in collection to exercise the documented API flow manually. |
 | AI coding assistant | Helped analyze requirements, create implementation plans, identify edge cases, review code, and propose test cases. |
 
 ## AI-Assisted Development

@@ -33,16 +33,18 @@ The application must support:
 Use feature-based packages:
 
 ```text
-com.example.movieticketbooking
+com.aditya.movieticketbooking
 ├── common
 ├── config
-├── auth
 ├── user
 ├── city
 ├── theater
+├── movie
 ├── show
 ├── booking
+├── pricing
 ├── payment
+├── refund
 └── notification
 ```
 

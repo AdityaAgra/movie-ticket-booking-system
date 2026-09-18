@@ -1,6 +1,6 @@
 # API Reference and Local Testing
 
-This reference contains every API implemented through Phase 8. Later planned APIs, such as cancellation and booking history, are not included.
+This reference contains every API implemented through Phase 10.
 
 Base URL: http://localhost:8080/api/v1
 
@@ -186,7 +186,7 @@ Response, 201 Created:
 
 ### POST /refund-policies, admin
 
-The policy is ready for configuration and will be used by the later cancellation flow.
+The policy controls the refund percentage selected during cancellation.
 
 ~~~powershell
 curl.exe -u "admin@moviebooking.local:admin123" -H "Content-Type: application/json" -d '{"minimumHoursBeforeShow":24,"refundPercentage":100.00,"active":true}' http://localhost:8080/api/v1/refund-policies

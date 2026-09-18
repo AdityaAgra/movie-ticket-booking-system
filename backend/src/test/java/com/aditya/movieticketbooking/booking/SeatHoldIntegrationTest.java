@@ -39,6 +39,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.RepeatedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -153,7 +154,7 @@ class SeatHoldIntegrationTest {
     }
 
     // This is not transactional: each competing call must use its own database transaction.
-    @Test
+    @RepeatedTest(3)
     @org.springframework.transaction.annotation.Transactional(propagation = org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED)
     void concurrentHoldsHaveExactlyOneSuccess() throws Exception {
         Fixture fixture = fixture(1);
