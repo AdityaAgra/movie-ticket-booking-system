@@ -46,6 +46,8 @@ public class SecurityConfiguration {
                         .hasRole("CUSTOMER")
                         .requestMatchers(HttpMethod.POST, "/api/v1/bookings/*/pay")
                         .hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/bookings/me")
+                        .hasRole("CUSTOMER")
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(AbstractHttpConfigurer::disable)

@@ -2,6 +2,7 @@ package com.aditya.movieticketbooking.show;
 
 import java.util.List;
 import java.util.UUID;
+import java.time.Instant;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,12 @@ public interface ShowSeatRepository extends JpaRepository<ShowSeat, UUID> {
             """)
     List<ShowSeat> findByShowIdAndSeatIdsForUpdate(
             @Param("showId") UUID showId, @Param("seatIds") List<UUID> seatIds);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
+            SELECT showSeat FROM ShowSeat showSeat
+            WHERE showSeat.status = com.aditya.movieticketbooking.common.enums.ShowSeatStatus.HELD
+              AND showSeat.holdExpiry < :now
+            """)
+    List<ShowSeat> findExpiredHoldsForUpdate(@Param("now") Instant now);
 }

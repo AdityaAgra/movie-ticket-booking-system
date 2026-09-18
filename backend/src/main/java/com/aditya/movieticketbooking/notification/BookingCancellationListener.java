@@ -1,25 +1,21 @@
 package com.aditya.movieticketbooking.notification;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
-public class BookingConfirmationListener {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BookingConfirmationListener.class);
+public class BookingCancellationListener {
     private final NotificationService notificationService;
 
-    public BookingConfirmationListener(NotificationService notificationService) {
+    public BookingCancellationListener(NotificationService notificationService) {
         this.notificationService = notificationService;
     }
 
     @Async("notificationTaskExecutor")
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void onBookingConfirmed(BookingConfirmedEvent event) {
-        notificationService.sendBookingConfirmation(event);
-        LOGGER.debug("Booking confirmation notification completed for {}.", event.bookingId());
+    public void onBookingCancelled(BookingCancellationEvent event) {
+        notificationService.sendCancellationRefund(event);
     }
 }

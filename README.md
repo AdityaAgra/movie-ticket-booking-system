@@ -115,5 +115,7 @@ These credentials are for local development only. Override them with `ADMIN_EMAI
 - [High-Level Design](docs/HLD.md)
 - [Low-Level Design](docs/LLD.md)
 - [Implementation Plan](docs/IMPLEMENTATION_PLAN.md)
+- [API Reference and Local Testing](docs/API_REFERENCE.md)
+- [Postman Collection](docs/Movie-Ticket-Booking-System.postman_collection.json)
 - [Agent Instructions](AGENTS.md)
 - [Skills Used](SKILLS.md)

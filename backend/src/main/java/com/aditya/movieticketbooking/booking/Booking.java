@@ -60,4 +60,8 @@ public class Booking {
     public void confirm() {
         this.status = BookingStatus.CONFIRMED;
     }
+
+    public void expire() {
+        this.status = BookingStatus.EXPIRED;
+    }
 }
