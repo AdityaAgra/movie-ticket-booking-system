@@ -3,6 +3,7 @@ package com.aditya.movieticketbooking.city;
 import com.aditya.movieticketbooking.city.dto.CityResponse;
 import com.aditya.movieticketbooking.city.dto.CreateCityRequest;
 import com.aditya.movieticketbooking.common.exception.BusinessConflictException;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,5 +20,10 @@ public class CityService {
             throw new BusinessConflictException("A city with this name already exists.");
         }
         return CityResponse.from(cityRepository.save(City.create(name)));
+    }
+
+    @Transactional(readOnly = true)
+    public List<CityResponse> findAll() {
+        return cityRepository.findAllByOrderByNameAsc().stream().map(CityResponse::from).toList();
     }
 }

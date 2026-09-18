@@ -36,7 +36,9 @@ public class SecurityConfiguration {
                                 "/api/v1/cities",
                                 "/api/v1/theaters",
                                 "/api/v1/auditoriums",
-                                "/api/v1/auditoriums/*/seats")
+                                "/api/v1/auditoriums/*/seats",
+                                "/api/v1/movies",
+                                "/api/v1/shows")
                         .hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())

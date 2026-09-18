@@ -3,6 +3,8 @@ package com.aditya.movieticketbooking.city;
 import com.aditya.movieticketbooking.city.dto.CityResponse;
 import com.aditya.movieticketbooking.city.dto.CreateCityRequest;
 import jakarta.validation.Valid;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,5 +23,10 @@ public class CityController {
     @ResponseStatus(HttpStatus.CREATED)
     public CityResponse create(@Valid @RequestBody CreateCityRequest request) {
         return cityService.create(request);
+    }
+
+    @GetMapping
+    public List<CityResponse> findAll() {
+        return cityService.findAll();
     }
 }
