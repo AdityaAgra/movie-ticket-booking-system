@@ -1,0 +1,202 @@
+{
+  "info": {
+    "_postman_id": "e55cf6af-37ed-4eaa-b5f8-4c254ea4b8d9",
+    "name": "Movie Ticket Booking System",
+    "description": "API collection for the Movie Ticket Booking System through Phase 8. Run requests in the numbered order. Successful create requests automatically save returned IDs as collection variables.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api/v1" },
+    { "key": "adminEmail", "value": "admin@moviebooking.local" },
+    { "key": "adminPassword", "value": "admin123" },
+    { "key": "customerEmail", "value": "customer@moviebooking.local" },
+    { "key": "customerPassword", "value": "customer123" },
+    { "key": "cityId", "value": "" },
+    { "key": "theaterId", "value": "" },
+    { "key": "auditoriumId", "value": "" },
+    { "key": "seatId", "value": "" },
+    { "key": "movieId", "value": "" },
+    { "key": "showId", "value": "" },
+    { "key": "bookingId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "0. Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "1. Admin Setup",
+      "item": [
+        {
+          "name": "1.1 Create City",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["var body = pm.response.json();", "pm.collectionVariables.set('cityId', body.id);"] } }],
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{adminEmail}}", "type": "string" }, { "key": "password", "value": "{{adminPassword}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Bengaluru\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/cities"
+          }
+        },
+        {
+          "name": "1.2 Create Theater",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["var body = pm.response.json();", "pm.collectionVariables.set('theaterId', body.id);"] } }],
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{adminEmail}}", "type": "string" }, { "key": "password", "value": "{{adminPassword}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"PVR Orion\",\n  \"address\": \"Rajajinagar, Bengaluru\",\n  \"cityId\": \"{{cityId}}\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/theaters"
+          }
+        },
+        {
+          "name": "1.3 Create Auditorium",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["var body = pm.response.json();", "pm.collectionVariables.set('auditoriumId', body.id);"] } }],
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{adminEmail}}", "type": "string" }, { "key": "password", "value": "{{adminPassword}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Screen 1\",\n  \"theaterId\": \"{{theaterId}}\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/auditoriums"
+          }
+        },
+        {
+          "name": "1.4 Create Regular Seat",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["var body = pm.response.json();", "pm.collectionVariables.set('seatId', body.id);"] } }],
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{adminEmail}}", "type": "string" }, { "key": "password", "value": "{{adminPassword}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"rowLabel\": \"A\",\n  \"seatNumber\": 1,\n  \"seatType\": \"REGULAR\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/auditoriums/{{auditoriumId}}/seats"
+          }
+        },
+        {
+          "name": "1.5 Create Premium Seat",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{adminEmail}}", "type": "string" }, { "key": "password", "value": "{{adminPassword}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"rowLabel\": \"A\",\n  \"seatNumber\": 2,\n  \"seatType\": \"PREMIUM\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/auditoriums/{{auditoriumId}}/seats"
+          }
+        },
+        {
+          "name": "1.6 Create Movie",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["var body = pm.response.json();", "pm.collectionVariables.set('movieId', body.id);"] } }],
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{adminEmail}}", "type": "string" }, { "key": "password", "value": "{{adminPassword}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Interstellar\",\n  \"durationMinutes\": 169\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/movies"
+          }
+        },
+        {
+          "name": "1.7 Create Show",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["var body = pm.response.json();", "pm.collectionVariables.set('showId', body.id);"] } }],
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{adminEmail}}", "type": "string" }, { "key": "password", "value": "{{adminPassword}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"movieId\": \"{{movieId}}\",\n  \"auditoriumId\": \"{{auditoriumId}}\",\n  \"startTime\": \"2026-12-25T14:30:00Z\",\n  \"basePrice\": 250.00\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/shows"
+          }
+        },
+        {
+          "name": "1.8 Create Discount Code",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{adminEmail}}", "type": "string" }, { "key": "password", "value": "{{adminPassword}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"WEEKEND10\",\n  \"discountType\": \"PERCENTAGE\",\n  \"value\": 10.00,\n  \"validFrom\": \"2026-01-01T00:00:00Z\",\n  \"validTo\": \"2027-01-01T00:00:00Z\",\n  \"active\": true\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/discount-codes"
+          }
+        },
+        {
+          "name": "1.9 Create Refund Policy",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{adminEmail}}", "type": "string" }, { "key": "password", "value": "{{adminPassword}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"minimumHoursBeforeShow\": 24,\n  \"refundPercentage\": 100.00,\n  \"active\": true\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/refund-policies"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Customer Browse",
+      "item": [
+        {
+          "name": "2.1 Get Cities",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
+            "method": "GET",
+            "url": "{{baseUrl}}/cities"
+          }
+        },
+        {
+          "name": "2.2 Get Shows by City and Date",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
+            "method": "GET",
+            "url": "{{baseUrl}}/shows?cityId={{cityId}}&date=2026-12-25"
+          }
+        },
+        {
+          "name": "2.3 Get Show Seat Map",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
+            "method": "GET",
+            "url": "{{baseUrl}}/shows/{{showId}}/seats"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Customer Booking",
+      "item": [
+        {
+          "name": "3.1 Hold Seat",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["var body = pm.response.json();", "pm.collectionVariables.set('bookingId', body.bookingId);"] } }],
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"seatIds\": [\"{{seatId}}\"],\n  \"discountCode\": \"WEEKEND10\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/shows/{{showId}}/holds"
+          }
+        },
+        {
+          "name": "3.2 Get Seat Map After Hold",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
+            "method": "GET",
+            "url": "{{baseUrl}}/shows/{{showId}}/seats"
+          }
+        },
+        {
+          "name": "3.3 Pay for Booking",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
+            "method": "POST",
+            "url": "{{baseUrl}}/bookings/{{bookingId}}/pay"
+          }
+        },
+        {
+          "name": "3.4 Get Seat Map After Payment",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
+            "method": "GET",
+            "url": "{{baseUrl}}/shows/{{showId}}/seats"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -43,3 +43,8 @@ Implement Phase 5 of the implementation plan and verify all test cases
 Implement Phase 6 of the implementation plan and verify all test cases
 
 Implement Phase 7 of the implementation plan and verify all test cases
+
+Implement Phase 8 of the implementation plan and verify all test cases
+
+Create all the APIs so far in the project directory inside docs
+Include sample curl for all the APIs including request and response
