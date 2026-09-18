@@ -56,4 +56,8 @@ public class Booking {
     public BookingStatus getStatus() { return status; }
     public BigDecimal getTotalAmount() { return totalAmount; }
     public Instant getCreatedAt() { return createdAt; }
+
+    public void confirm() {
+        this.status = BookingStatus.CONFIRMED;
+    }
 }
