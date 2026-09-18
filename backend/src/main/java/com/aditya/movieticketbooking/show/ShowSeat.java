@@ -51,4 +51,22 @@ public class ShowSeat {
     public ShowSeatStatus getStatus() { return status; }
     public User getHeldByUser() { return heldByUser; }
     public Instant getHoldExpiry() { return holdExpiry; }
+
+    public void hold(User user, Instant expiry) {
+        this.status = ShowSeatStatus.HELD;
+        this.heldByUser = user;
+        this.holdExpiry = expiry;
+    }
+
+    public void releaseHold() {
+        this.status = ShowSeatStatus.AVAILABLE;
+        this.heldByUser = null;
+        this.holdExpiry = null;
+    }
+
+    public void markBooked() {
+        this.status = ShowSeatStatus.BOOKED;
+        this.heldByUser = null;
+        this.holdExpiry = null;
+    }
 }

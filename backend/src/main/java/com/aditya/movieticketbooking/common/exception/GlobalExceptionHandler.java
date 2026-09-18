@@ -58,6 +58,13 @@ public class GlobalExceptionHandler {
         return error(HttpStatus.CONFLICT, "CONFLICT", exception.getMessage(), request, Map.of());
     }
 
+    @ExceptionHandler(SeatUnavailableException.class)
+    ResponseEntity<ApiError> handleSeatUnavailable(
+            SeatUnavailableException exception,
+            HttpServletRequest request) {
+        return error(HttpStatus.CONFLICT, "SEAT_UNAVAILABLE", exception.getMessage(), request, Map.of());
+    }
+
     @ExceptionHandler(InvalidRequestException.class)
     ResponseEntity<ApiError> handleInvalidRequest(
             InvalidRequestException exception,

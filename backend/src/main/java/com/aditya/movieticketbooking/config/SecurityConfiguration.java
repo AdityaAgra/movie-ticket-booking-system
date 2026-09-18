@@ -42,6 +42,8 @@ public class SecurityConfiguration {
                                 "/api/v1/discount-codes",
                                 "/api/v1/refund-policies")
                         .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/shows/*/holds")
+                        .hasRole("CUSTOMER")
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(AbstractHttpConfigurer::disable)
