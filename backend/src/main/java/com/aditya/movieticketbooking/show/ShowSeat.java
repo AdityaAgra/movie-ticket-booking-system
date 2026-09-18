@@ -69,4 +69,10 @@ public class ShowSeat {
         this.heldByUser = null;
         this.holdExpiry = null;
     }
+
+    public void makeAvailable() {
+        this.status = ShowSeatStatus.AVAILABLE;
+        this.heldByUser = null;
+        this.holdExpiry = null;
+    }
 }

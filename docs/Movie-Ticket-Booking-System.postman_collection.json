@@ -162,7 +162,15 @@
       "name": "3. Customer Booking",
       "item": [
         {
-          "name": "3.1 Hold Seat",
+          "name": "3.1 Get My Booking History",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
+            "method": "GET",
+            "url": "{{baseUrl}}/bookings/me"
+          }
+        },
+        {
+          "name": "3.2 Hold Seat",
           "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["var body = pm.response.json();", "pm.collectionVariables.set('bookingId', body.bookingId);"] } }],
           "request": {
             "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
@@ -173,7 +181,7 @@
           }
         },
         {
-          "name": "3.2 Get Seat Map After Hold",
+          "name": "3.3 Get Seat Map After Hold",
           "request": {
             "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
             "method": "GET",
@@ -181,7 +189,7 @@
           }
         },
         {
-          "name": "3.3 Pay for Booking",
+          "name": "3.4 Pay for Booking",
           "request": {
             "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
             "method": "POST",
@@ -189,7 +197,23 @@
           }
         },
         {
-          "name": "3.4 Get Seat Map After Payment",
+          "name": "3.5 Get Seat Map After Payment",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
+            "method": "GET",
+            "url": "{{baseUrl}}/shows/{{showId}}/seats"
+          }
+        },
+        {
+          "name": "3.6 Cancel Booking",
+          "request": {
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
+            "method": "POST",
+            "url": "{{baseUrl}}/bookings/{{bookingId}}/cancel"
+          }
+        },
+        {
+          "name": "3.7 Get Seat Map After Cancellation",
           "request": {
             "auth": { "type": "basic", "basic": [{ "key": "username", "value": "{{customerEmail}}", "type": "string" }, { "key": "password", "value": "{{customerPassword}}", "type": "string" }] },
             "method": "GET",

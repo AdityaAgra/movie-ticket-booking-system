@@ -200,6 +200,30 @@ Response, 201 Created:
 
 ## Booking APIs
 
+### GET /bookings/me, customer
+
+Returns only the authenticated customer’s bookings, ordered from newest to oldest. The API does not accept a user identifier, so a request cannot select another customer’s history.
+
+~~~powershell
+curl.exe -u "customer@moviebooking.local:customer123" http://localhost:8080/api/v1/bookings/me
+~~~
+
+Response, 200 OK:
+
+~~~json
+[
+  {
+    "bookingId":"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+    "status":"CONFIRMED",
+    "totalAmount":495.00,
+    "createdAt":"2026-12-25T10:00:00Z",
+    "showId":"66666666-6666-6666-6666-666666666666",
+    "movieTitle":"Interstellar",
+    "showStartTime":"2026-12-25T14:30:00Z"
+  }
+]
+~~~
+
 ### POST /shows/{showId}/holds, customer
 
 Use physical seat IDs returned by the seat map. The default hold duration is five minutes. Pricing applies configured seat-type and weekend surcharges plus an optional valid discount code.
@@ -231,6 +255,30 @@ Response, 200 OK:
 ~~~
 
 Payment locks and revalidates each selected seat. On success, seats become BOOKED and their hold fields are cleared.
+
+### POST /bookings/{bookingId}/cancel, customer
+
+Only the owner can cancel a CONFIRMED booking. The system chooses the best active refund policy for the remaining time before the show, records a REFUNDED payment, changes the booking to CANCELLED, and returns its seats to AVAILABLE for resale.
+
+~~~powershell
+curl.exe -X POST -u "customer@moviebooking.local:customer123" http://localhost:8080/api/v1/bookings/<booking-id>/cancel
+~~~
+
+Response, 200 OK:
+
+~~~json
+{
+  "bookingId":"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+  "bookingStatus":"CANCELLED",
+  "refundPaymentId":"cccccccc-cccc-cccc-cccc-cccccccccccc",
+  "refundPaymentStatus":"REFUNDED",
+  "refundAmount":495.00,
+  "refundPercentage":100.00,
+  "seatsReleased":true
+}
+~~~
+
+Pending, expired, or already cancelled bookings return 409 CONFLICT. A customer cannot cancel another customer’s booking.
 
 ## Complete local testing flow
 
@@ -309,7 +357,22 @@ Each command and expected response is shown earlier in this document.
 3. Call GET /shows/{show-id}/seats again.
 4. Verify the selected seats are BOOKED.
 
-### 8. Run automated verification
+### 8. Cancel a confirmed booking and verify the refund
+
+1. POST /bookings/{booking-id}/cancel.
+2. Verify bookingStatus is CANCELLED and refundPaymentStatus is REFUNDED.
+3. GET /shows/{show-id}/seats and verify the cancelled seats are AVAILABLE.
+4. GET /bookings/me and verify the booking status is CANCELLED.
+
+### 9. Check booking history and hold expiry
+
+1. GET /bookings/me to verify that the booking belongs to the authenticated customer.
+2. To test expiry manually, create a separate hold and do not pay for it.
+3. After its holdExpiresAt time passes, wait up to one minute for scheduled cleanup.
+4. GET /shows/{show-id}/seats again and verify that unpaid seat is AVAILABLE.
+5. GET /bookings/me and verify that unpaid booking has status EXPIRED.
+
+### 10. Run automated verification
 
 From backend, with the same database environment variables:
 

@@ -41,6 +41,11 @@ public class Payment {
         this.status = PaymentStatus.SUCCESS;
     }
     public static Payment success(Booking booking) { return new Payment(booking, booking.getTotalAmount()); }
+    public static Payment refund(Booking booking, BigDecimal amount) {
+        Payment payment = new Payment(booking, amount);
+        payment.status = PaymentStatus.REFUNDED;
+        return payment;
+    }
     @PrePersist
     void initializeCreatedAt() { if (createdAt == null) { createdAt = Instant.now(); } }
     public UUID getId() { return id; }
